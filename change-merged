@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
         jsonstruct = {"issue": {}}
         jsonstruct["issue"]["notes"] = redminecomment
-        jsonstruct["issue"]["status_id"] = "Resolved"
+        jsonstruct["issue"]["status_id"] = "3"
 
         jsondata = json.dumps(jsonstruct)
 
