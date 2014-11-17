@@ -17,9 +17,9 @@ if __name__ == '__main__':
     parser.add_option('-c', '--change', dest='changeid')
     parser.add_option('-u', '--change-url', dest='changeurl')
     parser.add_option('-p', '--project', dest='project')
-    parser.add_option('-p', '--branch', dest='branch')
-    parser.add_option('-o', '--topic', dest='topic')
-    parser.add_option('-o', '--submitter', dest='submitter')
+    parser.add_option('-b', '--branch', dest='branch')
+    parser.add_option('-y', '--topic', dest='topic')
+    parser.add_option('-s', '--submitter', dest='submitter')
     parser.add_option('-o', '--commit', dest='commit')
 
     (options, x) = parser.parse_args(sys.argv)
