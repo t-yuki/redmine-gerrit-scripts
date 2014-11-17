@@ -1,0 +1,85 @@
+#!/usr/bin/python2.7
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2014 Nathan Cassee
+#
+
+import optparse
+from subprocess import check_output  # TODO: you'll need python 2.7 for this
+import sys
+import re
+import httplib
+import json
+import config
+
+if __name__ == '__main__':
+    parser = optparse.OptionParser()
+    parser.add_option('-c', '--change', dest='changeid')
+    parser.add_option('-u', '--change-url', dest='changeurl')
+    parser.add_option('-p', '--project', dest='project')
+    parser.add_option('-o', '--commit', dest='commit')
+
+    (options, x) = parser.parse_args(sys.argv)
+
+    if options.project not in config.GERRIT_PROJECTS:
+        print
+        "wrong project %s" % options.project
+        sys.exit(0)
+
+    commitmsg = check_output(['git', 'cat-file', '-p', options.commit])
+    if not commitmsg or len(commitmsg) < 10:
+        print
+        "no commit msg!"
+        sys.exit(0)
+
+
+    # Don't change the status, only put a note. Otherwise uncomment the lines below.
+    IN_REVIEW_STATUS = None
+    # for drafts, change the status to "In Progress"...
+    #    if options.isdraft == str("true"):
+    #        IN_REVIEW_STATUS = 2
+    # ... otherwise change to "Fix Uploaded"
+    #    else:
+    #        IN_REVIEW_STATUS = 10
+
+    regex = re.compile(config.REDMINE_RESOLVED_ISSUE_REGEX, re.IGNORECASE)
+    mgi = regex.finditer(commitmsg)
+    for mg in mgi:
+        print(mg.group(0))
+
+    #     redmineid = int(mg.group(1))
+    #     if not redmineid or redmineid == 0:
+    #         print
+    #         "no issue set here"
+    #         sys.exit(0)
+    #
+    #
+    #     if options.isdraft == str("true"):
+    #         redminecomment = "Gerrit received a related DRAFT patchset '%s' for Issue #%d.\n" % (
+    #             options.patchset, redmineid)
+    #     else:
+    #         redminecomment = "Gerrit received a related patchset '%s' for Issue #%d.\n" % (options.patchset, redmineid)
+    #
+    #     redminecomment += "Uploader: %s\n" % options.uploader
+    #     redminecomment += "Change-Id: %s\n" % options.changeid
+    #     redminecomment += "Change-Id: %s\n" % options.changeid
+    #     redminecomment += "Gerrit URL: %s\n" % options.changeurl
+    #
+    #     jsonstruct = {"issue": {}}
+    #     jsonstruct["issue"]["notes"] = redminecomment
+    #     if IN_REVIEW_STATUS:
+    #         jsonstruct["issue"]["status_id"] = IN_REVIEW_STATUS
+    #
+    #     jsondata = json.dumps(jsonstruct)
+    #
+    #     puturl = "/issues/%d.json" % (redmineid)
+    #
+    #     if config.REDMINE_HOST_USING_SSL:
+    #         connection = httplib.HTTPSConnection(config.REDMINE_HOST, config.REDMINE_HOST_PORT_NUMBER)
+    #     else:
+    #         connection = httplib.HTTPConnection(config.REDMINE_HOST, config.REDMINE_HOST_PORT_NUMBER)
+    #
+    #     connection.request('PUT', puturl, jsondata,
+    #                        {"Content-Type": "application/json", "X-Redmine-API-Key": config.REDMINE_API_KEY})
+    #     response = connection.getresponse()
+        sys.exit(0)
