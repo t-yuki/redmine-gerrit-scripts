@@ -23,7 +23,9 @@ REDMINE_HOST_USING_SSL = False
 
 # the regex we use for findig the issue id
 REDMINE_ISSUE_ID_REGEX = '\#(\d+)'
-REDMINE_RESOLVED_ISSUE_REGEX = '\#Resolved (\d+)'
+
+# Matches both #Resolved 5 as #Resolves 5
+REDMINE_RESOLVED_ISSUE_REGEX = '\#Resolve[ds] (\d+)'
 
 # which gerrit projects to run the script for
 GERRIT_PROJECTS = ["PROJECT_NAME"]
