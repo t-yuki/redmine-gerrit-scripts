@@ -25,5 +25,5 @@ REDMINE_HOST_USING_SSL = False
 REDMINE_ISSUE_ID_REGEX = '\#(\d+)'
 REDMINE_RESOLVED_ISSUE_REGEX = '\#Resolved (\d+)'
 
-# which projects to run the script for
+# which gerrit projects to run the script for
 GERRIT_PROJECTS = ["PROJECT_NAME"]
