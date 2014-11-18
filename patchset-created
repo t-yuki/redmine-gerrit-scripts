@@ -32,13 +32,15 @@ def SendChangeAssociation(redmineId, options, changeStatus):
         redminecomment = "Gerrit received a related DRAFT patchset '%s' for Issue #%d.\n" % (
             options.patchset, redmineId)
     else:
-        redminecomment = "Some new code has been pushed to this issue #%d. Submitter is %s and the code can be found" \
+        redminecomment = "Code has been pushed to issue #%d. Submitter is %s and the code can be found" \
                          " here: %s" % (redmineId, options.uploader, options.changeurl)
 
     jsonstruct = {"issue": {}}
     if changeStatus:
         jsonstruct["issue"]["status_id"] = "4"
-        redminecomment = "Some nw code has been pushed to issue %d by %s and claims to resolve the issue. Code can be" \
+        redminecomment = "Code has been pushed to issue #%d by %s and resolves the issue. " \
+                         "Issue status has been changed to " \
+                         "'Feedback'. \nCode can be" \
                          " found here: %s" % (redmineId, options.uploader, options.changeurl)
 
     jsonstruct["issue"]["notes"] = redminecomment
