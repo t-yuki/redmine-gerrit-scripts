@@ -25,14 +25,12 @@ if __name__ == '__main__':
     (options, x) = parser.parse_args(sys.argv)
 
     if options.project not in config.GERRIT_PROJECTS:
-        print
-        "wrong project %s" % options.project
+        print("wrong project %s" % options.project)
         sys.exit(0)
 
     commitmsg = check_output(['git', 'cat-file', '-p', options.commit])
     if not commitmsg or len(commitmsg) < 10:
-        print
-        "no commit msg!"
+        print("no commit msg!")
         sys.exit(0)
 
 
