@@ -32,16 +32,16 @@ def SendChangeAssociation(redmineId, options, changeStatus):
         redminecomment = "Gerrit received a related DRAFT patchset '%s' for Issue #%d.\n" % (
             options.patchset, redmineId)
     else:
-        redminecomment = "Gerrit received a related patchset '%s' for Issue #%d.\n" % (options.patchset, redmineId)
-    redminecomment += "Uploader: %s\n" % options.uploader
-    redminecomment += "Change-Id: %s\n" % options.changeid
-    redminecomment += "Change-Id: %s\n" % options.changeid
-    redminecomment += "Gerrit URL: %s\n" % options.changeurl
+        redminecomment = "Some new code has been pushed to this issue #%d. Submitter is %s and the code can be found" \
+                         " here: %s" % (redmineId, options.uploader, options.changeurl)
 
     jsonstruct = {"issue": {}}
-    jsonstruct["issue"]["notes"] = redminecomment
     if changeStatus:
         jsonstruct["issue"]["status_id"] = "4"
+        redminecomment = "Some nw code has been pushed to issue %d by %s and claims to resolve the issue. Code can be" \
+                         " found here: %s" % (redmineId, options.uploader, options.changeurl)
+
+    jsonstruct["issue"]["notes"] = redminecomment
 
     jsondata = json.dumps(jsonstruct)
 
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             sys.exit(0)
         SendChangeAssociation(redmineid, options, False)
 
-    mgi = regex.finditer(regexResolved)
+    mgi = regexResolved.finditer(commitmsg)
 
     for mg in mgi:
         redmineid = int(mg.group(0).split()[1])

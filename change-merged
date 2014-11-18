@@ -53,10 +53,10 @@ if __name__ == '__main__':
             "no issue set here"
             sys.exit(0)
 
-        redminecomment = "%s verified and submitted the changeset in Gerrit for issue #%d.\n" % (
+        redminecomment = "%s verified and merged the changeset in Gerrit for issue #%d.\n" % (
            options.submitter,  redmineid)
 
-        redminecomment += "Gerrit URL: %s" % options.changeurl
+        redminecomment += "Gerrit URL: %s\n\nFeature is now resolved." % options.changeurl
 
         jsonstruct = {"issue": {}}
         jsonstruct["issue"]["notes"] = redminecomment
