@@ -58,6 +58,8 @@ if __name__ == '__main__':
     parser.add_option('-a', '--patchset', dest='patchset')
     parser.add_option('-d', '--is-draft', dest='isdraft')
     parser.add_option('-t', '--topic', dest='topic')
+    parser.add_option('-k', '--kind', dest='kind')
+    parser.add_option('-O', '--change-owner', dest='owner')
 
     (options, x) = parser.parse_args(sys.argv)
 
